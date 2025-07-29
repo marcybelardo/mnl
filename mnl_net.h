@@ -1,4 +1,5 @@
-/*      "Marcy's Nice Libs" v1.0.0
+/*      
+ *      "Marcy's Nice Libs" v1.0.0
  *
  *      A friendly network library. Easy and simple!
  *
