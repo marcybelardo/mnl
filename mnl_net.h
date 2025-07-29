@@ -19,11 +19,11 @@
 
 #define MNL_NET_BACKLOG 16
 
-// Creates listening socket. Takes hostname, port, and socket family enum
+// Creates listening socket. Takes hostname and port
 // Returns file descriptor of socket, or -1 on error
 int mnl_net_listen(const char *host, const char *port);
 
-// Accepts new connection. Takes server file descriptor, and socket family enum
+// Accepts new connection. Takes server file descriptor
 // Returns file descriptor of socket, or -1 on error
 int mnl_net_accept(int fd);
 
@@ -105,7 +105,7 @@ static int mnl_net_bind(const char *host, const char *port)
 	return sfd;
 }
 
-void *mnl_net_getinaddr(struct sockaddr *sa)
+static void *mnl_net_getinaddr(struct sockaddr *sa)
 {
 	if (sa->sa_family == AF_INET)
 		return &(((struct sockaddr_in *)sa)->sin_addr);
