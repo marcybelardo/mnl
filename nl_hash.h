@@ -35,7 +35,7 @@ static const uint64_t FNV64_PRIME        = 0x00000100000001B3;
 // static const uint32_t FNV32_OFFSET_BASIS = 0x811C9DC5;
 // static const uint32_t FNV32_PRIME        = 0x01000193;
 
-static uint64_t fnv1a_64(uint8_t *data, size_t len)
+static uint64_t fnv1a_64(const uint8_t *data, size_t len)
 {
 	uint64_t hash = FNV_OFFSET_BASIS;
 
@@ -47,7 +47,7 @@ static uint64_t fnv1a_64(uint8_t *data, size_t len)
 	return hash;
 }
 
-uint64_t nl_hash_64(char *data)
+uint64_t nl_hash_64(const char *data)
 {
 	size_t len = strlen(data);
 	return fnv1a_64(data, len);
