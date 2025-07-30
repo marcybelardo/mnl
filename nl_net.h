@@ -49,12 +49,12 @@ static int nl_net_set_nonblock(int fd)
 
 	flags = fcntl(fd, F_GETFL, 0);
 	if (flags == -1) {
-		perror("nf_set_nonblock fcntl F_GETFL");
+		perror("nl_net_set_nonblock fcntl F_GETFL");
 		return -1;
 	}
 	res = fcntl(fd, F_SETFL, flags | O_NONBLOCK);
 	if (res == -1) {
-		perror("nf_set_nonblock fcntl F_SETFL");
+		perror("nl_net_set_nonblock fcntl F_SETFL");
 		return -1;
 	}
 
@@ -73,22 +73,22 @@ static int nl_net_bind(const char *host, const char *port)
 	hints.ai_flags = AI_PASSIVE;
 
 	if (getaddrinfo(host, port, &hints, &res) != 0) {
-		perror("nf_bind_conn() getaddrinfo");
+		perror("nl_net_bind getaddrinfo");
 		return -1;
 	}
 
 	for (rp = res; rp; rp = rp->ai_next) {
 		if ((sfd = socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol)) == -1) {
-			perror("nf_bind_conn socket");
+			perror("nl_net_bind socket");
 			continue;
 		}
 		if (setsockopt(sfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(int)) == -1) {
-			perror("nf_bind_conn setsockopt");
+			perror("nl_net_bind setsockopt");
 			return -1;
 		}
 		if ((bind(sfd, rp->ai_addr, rp->ai_addrlen)) == -1) {
 			close(sfd);
-			perror("nf_bind_conn bind");
+			perror("nl_net_bind bind");
 			continue;
 		}
 
@@ -98,7 +98,7 @@ static int nl_net_bind(const char *host, const char *port)
 	freeaddrinfo(res);
 	
 	if (!rp) {
-		fprintf(stderr, "nf_bind_conn failed to bind\n");
+		fprintf(stderr, "nl_net_bind failed to bind\n");
 		return -1;
 	}
 
@@ -124,7 +124,7 @@ int nl_net_listen(const char *host, const char *port)
 		return -1;
 	}
 	if ((listen(fd, NL_NET_BACKLOG)) == -1) {
-		perror("nf_listen_conn listen");
+		perror("nl_net_listen listen");
 		return -1;
 	}
 
@@ -139,7 +139,7 @@ int nl_net_accept(int fd)
 	char ipbuf[INET_ADDRSTRLEN + 1];
 
 	if ((clientfd = accept(fd, (struct sockaddr *)&client_addr, &addrlen)) < 0) {
-		perror("nf_accept_conn accept");
+		perror("nl_net_accept accept");
 		return -1;
 	}
 	

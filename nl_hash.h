@@ -15,6 +15,8 @@
 #ifndef NL_HASH_H
 #define NL_HASH_H
 
+#define NL_HASH_VERSION 1
+
 #include <stddef.h>
 #include <stdint.h>
 
