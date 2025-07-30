@@ -17,6 +17,7 @@ I'm a big fan of the stb image libraries, so I've used a similar structure. Put 
 | file | usage |
 | ---- | ----- |
 | nl_net.h | create tcp network connections |
+| nl_hash.h | hash tables and functions |
 
 
 Go give the [stb libraries](https://github.com/nothings/stb) a look! They are nice.
