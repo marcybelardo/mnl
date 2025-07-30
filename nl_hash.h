@@ -1,7 +1,7 @@
 /*
  *      "Marcy's Nice Libs" v1.0.0
  *
- *      A friendly hash map library. Easy and simple!
+ *      A friendly hash library. Easy and simple!
  *
  *      To use:
  *          #define NL_HASH_IMPL
@@ -32,8 +32,8 @@ uint64_t nl_hash_64(char *data);
 static const uint64_t FNV64_OFFSET_BASIS = 0xCBF29CE484222325;
 static const uint64_t FNV64_PRIME        = 0x00000100000001B3;
 
-static const uint32_t FNV32_OFFSET_BASIS = 0x811C9DC5;
-static const uint32_t FNV32_PRIME        = 0x01000193;
+// static const uint32_t FNV32_OFFSET_BASIS = 0x811C9DC5;
+// static const uint32_t FNV32_PRIME        = 0x01000193;
 
 static uint64_t fnv1a_64(uint8_t *data, size_t len)
 {
