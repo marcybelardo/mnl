@@ -1,35 +1,35 @@
-/*      
+/*
  *      "Marcy's Nice Libs" v1.0.0
  *
  *      A friendly network library. Easy and simple!
  *
  *      To use:
- *	    #define MNL_NET_IMPL
- *	before including the header file, like so
- *	
- *	#include ...
- *	#define MNL_NET_IMPL
- *	#include "mnl_net.h"
+ *         #define NL_NET_IMPL
+ *      before including the header file, like so
+ *
+ *      #include ...
+ *      #define NL_NET_IMPL
+ *      #include "nl_net.h"
  */
 
-#ifndef MNL_NET_H
-#define MNL_NET_H
+#ifndef NL_NET_H
+#define NL_NET_H
 
-#define MNL_NET_VERSION 1
+#define NL_NET_VERSION 1
 
-#define MNL_NET_BACKLOG 16
+#define NL_NET_BACKLOG 16
 
 // Creates listening socket. Takes hostname and port
 // Returns file descriptor of socket, or -1 on error
-int mnl_net_listen(const char *host, const char *port);
+int nl_net_listen(const char *host, const char *port);
 
 // Accepts new connection. Takes server file descriptor
 // Returns file descriptor of socket, or -1 on error
-int mnl_net_accept(int fd);
+int nl_net_accept(int fd);
 
-#endif // MNL_NET_H
+#endif // NL_NET_H
 
-#ifdef MNL_NET_IMPL
+#ifdef NL_NET_IMPL
 
 #include <arpa/inet.h>
 #include <fcntl.h>
@@ -43,7 +43,7 @@ int mnl_net_accept(int fd);
 #include <sys/un.h>
 #include <unistd.h>
 
-static int mnl_net_set_nonblock(int fd)
+static int nl_net_set_nonblock(int fd)
 {
 	int flags, res;
 
@@ -61,7 +61,7 @@ static int mnl_net_set_nonblock(int fd)
 	return 0;
 }
 
-static int mnl_net_bind(const char *host, const char *port)
+static int nl_net_bind(const char *host, const char *port)
 {
 	struct addrinfo hints, *res, *rp;
 	int sfd;
@@ -105,7 +105,7 @@ static int mnl_net_bind(const char *host, const char *port)
 	return sfd;
 }
 
-static void *mnl_net_getinaddr(struct sockaddr *sa)
+static void *nl_net_getinaddr(struct sockaddr *sa)
 {
 	if (sa->sa_family == AF_INET)
 		return &(((struct sockaddr_in *)sa)->sin_addr);
@@ -114,16 +114,16 @@ static void *mnl_net_getinaddr(struct sockaddr *sa)
 }
 
 
-int mnl_net_listen(const char *host, const char *port)
+int nl_net_listen(const char *host, const char *port)
 {
 	int fd;
 
-	if ((fd = mnl_net_bind(host, port)) == -1)
+	if ((fd = nl_net_bind(host, port)) == -1)
 		return -1;
-	if ((mnl_net_set_nonblock(fd)) == -1) {
+	if ((nl_net_set_nonblock(fd)) == -1) {
 		return -1;
 	}
-	if ((listen(fd, MNL_NET_BACKLOG)) == -1) {
+	if ((listen(fd, NL_NET_BACKLOG)) == -1) {
 		perror("nf_listen_conn listen");
 		return -1;
 	}
@@ -131,7 +131,7 @@ int mnl_net_listen(const char *host, const char *port)
 	return fd;
 }
 
-int mnl_net_accept(int fd)
+int nl_net_accept(int fd)
 {
 	int clientfd;
 	struct sockaddr_storage client_addr;
@@ -143,13 +143,13 @@ int mnl_net_accept(int fd)
 		return -1;
 	}
 	
-	if ((mnl_net_set_nonblock(clientfd)) == -1) {
+	if ((nl_net_set_nonblock(clientfd)) == -1) {
 		close(clientfd);
 		return -1;
 	}
 
 	if (inet_ntop(client_addr.ss_family, 
-				mnl_net_getinaddr((struct sockaddr *)&client_addr),
+				nl_net_getinaddr((struct sockaddr *)&client_addr),
 				ipbuf, sizeof(ipbuf)) == NULL) {
 		close(clientfd);
 		return -1;
@@ -158,4 +158,4 @@ int mnl_net_accept(int fd)
 	return clientfd;
 }
 
-#endif // MNL_NET_IMPL
+#endif // NL_NET_IMPL

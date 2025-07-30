@@ -8,15 +8,15 @@ single-file C libraries, which are nice, and by Marcy
 I'm a big fan of the stb image libraries, so I've used a similar structure. Put the header file in your project, and use the appropriate macro to enable the function definitions. Like so,
 
 ```c
-#define MNL_NET_IMPL
-#include "mnl_net.h"
+#define NL_NET_IMPL
+#include "nl_net.h"
 ```
 
 #### Files
 
 | file | usage |
 | ---- | ----- |
-| mnl_net.h | create tcp network connections |
+| nl_net.h | create tcp network connections |
 
 
 Go give the [stb libraries](https://github.com/nothings/stb) a look! They are nice.
